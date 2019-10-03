@@ -18,7 +18,16 @@ class Pokemon
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM db")[0][0]
   end
   
-  def self.find
+  def self.find(name)
+    sql = <<-SQL
+      SELECT *
+      FROM db
+      WHERE name = ?
+      LIMIT 1
+    SQL
     
+    DB[:conn].execute(sql, name).map do |row|
+      self.new_from_db(row)
+    end.first
   end
 end
