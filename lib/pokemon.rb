@@ -8,20 +8,11 @@ class Pokemon
     @db = db
   end
   
-  def self.save()
+  def self.save(name, type, db)
     db.execute("INSERT INTO pokemon")
   end
   
   def self.find(name)
-    sql = <<-SQL
-      SELECT *
-      FROM db
-      WHERE name = ?
-      LIMIT 1
-    SQL
-    
-    DB[:conn].execute(sql, name).map do |row|
-      self.new_from_db(row)
-    end.first
+
   end
 end
